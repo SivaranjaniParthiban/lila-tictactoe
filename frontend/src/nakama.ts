@@ -1,6 +1,6 @@
 import { Client, Session, Socket } from "@heroiclabs/nakama-js";
 
-const host = import.meta.env.VITE_NAKAMA_HOST || "127.0.0.1";
+const host = import.meta.env.VITE_NAKAMA_HOST || "lila-tictactoe-production.up.railway.app";
 const port = import.meta.env.VITE_NAKAMA_PORT || "7350";
 const useSSL = import.meta.env.VITE_NAKAMA_SSL === "true";
 
