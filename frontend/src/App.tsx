@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { authenticate, getSocket, getSession } from "./nakama";
-import Game from "./components/Game";
+import Game from "./components/Game.tsx";
 import "./App.css";
 
 type Screen = "login" | "matchmaking" | "game";
