@@ -1,31 +1,24 @@
 version: '3.8'
-
 services:
   postgres:
     image: postgres:14-alpine
-    restart: unless-stopped
     environment:
       POSTGRES_DB: nakama
       POSTGRES_PASSWORD: localdb
+      PGSSLMODE: disable  # Fix SSL crash
     volumes:
       - pgdata:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
       interval: 5s
-      timeout: 5s
       retries: 5
 
   nakama:
     image: registry.heroiclabs.com/heroiclabs/nakama:3.22.0
-    restart: unless-stopped
     environment:
       POSTGRESDB: nakama
       POSTGRESPASSWORD: localdb
-      RUNTIME_PATH: /tmp/modules
-      # Add if SSL issues: PGSSLMODE: disable
-    command:
+    command: 
       - sh
       - -c
       - |
@@ -43,11 +36,9 @@ services:
       postgres:
         condition: service_healthy
     ports:
-      - "7349:7349"   # HTTP/REST
-      - "7350:7350"   # WebSocket/Match
-      - "7351:7351"   # Console
-    volumes:
-      - ./backend/build:/tmp/modules:ro  # Fallback if B64 fails
+      - "7349:7349"
+      - "7350:7350"
+      - "7351:7351"
 
 volumes:
   pgdata:
